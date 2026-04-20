@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apply — Beyond Mobile Health Phlebotomist Network</title>
+  <meta name="description" content="Join the BMH phlebotomist network. Apply in 5 minutes." />
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Epilogue',sans-serif;background:#f4f6f9;color:#0d1b2a;min-height:100vh}
+    .root{min-height:100vh;display:grid;grid-template-columns:300px 1fr}
+    .side{background:#0d1b2a;padding:40px 28px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow:hidden}
+    .logo{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+    .logo-mark{width:42px;height:42px;background:#e8f4fd;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#0d1b2a;flex-shrink:0}
+    .logo-name{font-size:13px;font-weight:700;color:#fff;line-height:1.3}
+    .logo-sub{font-size:10px;font-weight:400;color:#4a6fa5;letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+    .side-hed{font-size:22px;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.4px;margin-bottom:8px}
+    .side-sub{font-size:12px;color:#4a6fa5;line-height:1.7;margin-bottom:32px}
+    .steps{list-style:none;display:flex;flex-direction:column;gap:3px;flex:1}
+    .step{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px}
+    .step.active{background:rgba(255,255,255,.08)}
+    .step.done{opacity:.55}
+    .step.upcoming{opacity:.25}
+    .step-num{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0}
+    .step.active .step-num{background:#3b9ede;color:#fff}
+    .step.done .step-num{background:#1a5c38;color:#5de6a0;font-size:13px}
+    .step.upcoming .step-num{background:rgba(255,255,255,.06);color:#4a6fa5}
+    .step-label{font-size:12px;font-weight:500;color:#fff}
+    .side-footer{margin-top:auto;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);font-family:'JetBrains Mono',monospace;font-size:10px;color:#2d4a6a;letter-spacing:.04em;line-height:1.8}
+    .main{padding:52px 52px 80px;overflow-y:auto;min-height:100vh}
+    .shell{max-width:640px}
+    .prog{height:3px;background:#e2e8f0;border-radius:99px;margin-bottom:40px;overflow:hidden}
+    .prog-fill{height:100%;background:#3b9ede;border-radius:99px;transition:width .4s ease}
+    .step-hdr{margin-bottom:28px}
+    .eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:#3b9ede;letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px}
+    .title{font-size:26px;font-weight:800;letter-spacing:-.5px;color:#0d1b2a;margin-bottom:5px}
+    .desc{font-size:13px;color:#64748b;line-height:1.6}
+    .fgroup{margin-bottom:16px}
+    .flabel{display:block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#475569;margin-bottom:5px}
+    .req{color:#e53e3e}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+    .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
+    input[type=text],input[type=email],input[type=tel],input[type=number],input[type=date],select,textarea{width:100%;background:#fff;border:1.5px solid #e2e8f0;border-radius:10px;padding:11px 13px;font-family:'Epilogue',sans-serif;font-size:13px;color:#0d1b2a;outline:none;transition:border-color .15s,box-shadow .15s;appearance:none}
+    input:focus,select:focus,textarea:focus{border-color:#3b9ede;box-shadow:0 0 0 3px rgba(59,158,222,.12)}
+    input::placeholder{color:#c8d5e4}
+    textarea{resize:vertical;min-height:80px;line-height:1.6}
+    .chip-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+    .chip{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#fff;border:1.5px solid #e2e8f0;border-radius:9px;cursor:pointer;user-select:none;transition:border-color .12s,background .12s}
+    .chip:hover{border-color:#93c5fd}
+    .chip.on{border-color:#3b9ede;background:#eff8ff}
+    .cbox{width:16px;height:16px;border-radius:4px;border:1.5px solid #cbd5e0;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .12s}
+    .chip.on .cbox{background:#3b9ede;border-color:#3b9ede}
+    .cmark{width:7px;height:4px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translateY(-1px);opacity:0;transition:opacity .1s}
+    .chip.on .cmark{opacity:1}
+    .chip-lbl{font-size:12px;font-weight:500;color:#475569}
+    .chip.on .chip-lbl{color:#1e3a5f}
+    .terr-row{display:grid;grid-template-columns:1fr 60px 115px 32px;gap:7px;align-items:end;margin-bottom:8px}
+    .btn-rm{width:32px;height:40px;background:none;border:1.5px solid #e2e8f0;border-radius:8px;color:#94a3b8;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+    .btn-rm:hover{border-color:#fca5a5;color:#ef4444}
+    .btn-add-terr{width:100%;background:none;border:1.5px dashed #cbd5e0;border-radius:9px;color:#94a3b8;cursor:pointer;font-family:'Epilogue',sans-serif;font-size:12px;font-weight:500;padding:9px;transition:all .15s}
+    .btn-add-terr:hover{border-color:#3b9ede;color:#3b9ede}
+    .score-row{display:flex;gap:5px;margin-bottom:16px}
+    .score-btn{width:38px;height:38px;background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;color:#94a3b8;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;transition:all .12s}
+    .score-btn:hover{border-color:#3b9ede;color:#3b9ede}
+    .score-btn.sel{background:#0d1b2a;border-color:#0d1b2a;color:#fff;font-weight:700}
+    .hr{border:none;border-top:1px solid #f1f5f9;margin:20px 0}
+    .mini-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#94a3b8;margin-bottom:10px}
+    .nav{display:flex;justify-content:space-between;align-items:center;margin-top:36px;padding-top:22px;border-top:1px solid #f1f5f9}
+    .btn-back{background:none;border:1.5px solid #e2e8f0;border-radius:10px;color:#64748b;cursor:pointer;font-family:'Epilogue',sans-serif;font-size:13px;font-weight:500;padding:10px 22px;transition:all .12s}
+    .btn-back:hover{border-color:#94a3b8;color:#0d1b2a}
+    .btn-next{background:#0d1b2a;border:none;border-radius:10px;color:#fff;cursor:pointer;font-family:'Epilogue',sans-serif;font-size:13px;font-weight:700;padding:10px 28px;transition:all .12s}
+    .btn-next:hover{background:#1a3a5c}
+    .btn-submit{background:#1a5c38;border:none;border-radius:10px;color:#fff;cursor:pointer;font-family:'Epilogue',sans-serif;font-size:13px;font-weight:700;padding:10px 28px;transition:all .12s}
+    .btn-submit:hover{background:#0f3d25}
+    .btn-submit:disabled{opacity:.45;cursor:not-allowed}
+    .alert{padding:10px 14px;border-radius:9px;font-size:12px;margin-top:12px;font-family:'JetBrains Mono',monospace;background:#fff5f5;border:1px solid #fecaca;color:#c53030}
+    .review-block{margin-bottom:18px;background:#fff;padding:16px 18px;border-radius:12px;border:1.5px solid #e2e8f0}
+    .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+    .review-item{font-size:12px;color:#475569;line-height:1.5}
+    .review-item b{display:block;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:2px}
+    .review-caps{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .cap-pill{font-size:10px;background:#e8f4fd;color:#1e3a5f;padding:3px 9px;border-radius:20px;font-weight:500}
+    .success{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 40px;min-height:100vh}
+    .success-icon{width:70px;height:70px;background:#f0fff4;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;border:1.5px solid #9ae6b4;font-size:28px;color:#1a5c38}
+    .success-title{font-size:28px;font-weight:800;color:#0d1b2a;letter-spacing:-.5px;margin-bottom:10px}
+    .success-msg{font-size:14px;color:#64748b;line-height:1.8;max-width:420px;margin-bottom:24px}
+    .success-ref{font-family:'JetBrains Mono',monospace;font-size:11px;color:#94a3b8;background:#f8fafc;border:1px solid #e2e8f0;padding:7px 16px;border-radius:6px;letter-spacing:.08em}
+    @media(max-width:860px){.root{grid-template-columns:1fr}.side{position:static;height:auto;padding:24px 20px}.steps{flex-direction:row;flex-wrap:wrap;gap:5px}.step{padding:7px 9px}.main{padding:24px 20px 60px}.g2,.g3{grid-template-columns:1fr}.terr-row{grid-template-columns:1fr 56px 1fr 32px}}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+const SB_URL = "https://wilhuljumgshlgmnpuya.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndpbGh1bGp1bWdzaGxnbW5wdXlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyODc4NjksImV4cCI6MjA5MTg2Mzg2OX0.Z_9DDK4n0PGbEjAZjPO_cc_j_DvFvvRAF829xDCvJW8";
+const H = {"Content-Type":"application/json","apikey":SB_KEY,"Authorization":`Bearer ${SB_KEY}`,"Prefer":"return=representation"};
+
+async function post(table, body) {
+  const r = await fetch(`${SB_URL}/rest/v1/${table}`,{method:"POST",headers:H,body:JSON.stringify(body)});
+  if(!r.ok) throw new Error((await r.json()).message||"Submission failed");
+  return r.json();
+}
+
+const STEPS = [
+  {id:1,label:"Personal info",icon:"01"},
+  {id:2,label:"Credentials",icon:"02"},
+  {id:3,label:"Capabilities",icon:"03"},
+  {id:4,label:"Coverage",icon:"04"},
+  {id:5,label:"Compensation",icon:"05"},
+  {id:6,label:"Review & submit",icon:"06"},
+];
+
+const CAPS = [
+  {k:"adult_draws",l:"Adult draws"},{k:"pediatric_draws",l:"Pediatric draws"},
+  {k:"geriatric_draws",l:"Geriatric / senior"},{k:"hard_stick",l:"Hard stick"},
+  {k:"specimen_processing",l:"Specimen processing"},{k:"centrifuge_access",l:"Centrifuge access"},
+  {k:"same_day_available",l:"Same-day available"},{k:"weekend_available",l:"Weekend available"},
+  {k:"urgent_stat_ready",l:"Urgent / STAT ready"},{k:"own_vehicle",l:"Own vehicle"},
+];
+
+const LANES = [
+  {v:"concierge_home_draws",l:"Concierge home draws"},{v:"clinical_trials",l:"Clinical trials"},
+  {v:"wellness_events",l:"Wellness events"},{v:"pediatric_support",l:"Pediatric support"},
+  {v:"premium_concierge",l:"Premium concierge"},{v:"rapid_response",l:"Rapid response"},
+  {v:"routine_specimen_collection",l:"Routine specimen collection"},
+];
+
+function Chip({checked,onChange,label}){
+  return <div className={`chip${checked?" on":""}`} onClick={onChange}><div className="cbox"><div className="cmark"/></div><span className="chip-lbl">{label}</span></div>;
+}
+
+function Field({label,required,children}){
+  return <div className="fgroup"><label className="flabel">{label}{required&&<span className="req"> *</span>}</label>{children}</div>;
+}
+
+function SummaryBlock({title,children}){
+  return <div className="review-block"><div className="mini-lbl" style={{color:"#3b9ede",marginBottom:0}}>{title}</div>{children}</div>;
+}
+
+function App(){
+  const [step,setStep]=useState(1);
+  const [done,setDone]=useState(false);
+  const [loading,setLoad]=useState(false);
+  const [error,setError]=useState("");
+  const [refId,setRefId]=useState("");
+
+  const [p,setP]=useState({full_name:"",phone:"",email:"",city:"",state:"",zip_code:"",travel_radius_miles:""});
+  const [c,setC]=useState({cert_type:"",cert_number:"",issuing_body:"",expiration_date:"",cpr_bls_current:false,cpr_bls_expiration:"",liability_insurance:false,insurance_expiration:"",background_check_status:"not_submitted",driver_license:false});
+  const [caps,setCaps]=useState(Object.fromEntries(CAPS.map(x=>[x.k,false])));
+  const [lab,setLab]=useState("");
+  const [lanes,setLanes]=useState([]);
+  const [terrs,setTerrs]=useState([{county:"",state:"",territory_type:"primary"}]);
+  const [pay,setPay]=useState({pay_model:"per_draw",per_draw_rate:"",hourly_rate:"",travel_reimbursement:false,mileage_rate:""});
+  const [score,setScore]=useState(null);
+  const [notes,setNotes]=useState("");
+
+  const sP=(k,v)=>setP(x=>({...x,[k]:k==="state"?v.toUpperCase():v}));
+  const sC=(k,v)=>setC(x=>({...x,[k]:v}));
+  const sPy=(k,v)=>setPay(x=>({...x,[k]:v}));
+  const ss=s=>s<step?"done":s===step?"active":"upcoming";
+  const pct=((step-1)/5)*100;
+
+  const next=()=>{
+    if(step===1&&(!p.full_name.trim()||!p.phone.trim())){setError("Full name and phone number are required.");return;}
+    setError("");
+    if(step<6){setStep(s=>s+1);window.scrollTo(0,0);}
+    else submit();
+  };
+
+  const submit=async()=>{
+    setLoad(true);setError("");
+    try{
+      const [phleb]=await post("phlebotomists",{
+        ...p,
+        travel_radius_miles:p.travel_radius_miles?parseInt(p.travel_radius_miles):null,
+        onboarding_status:"in_progress",
+        agreement_status:"not_signed",
+        compliance_risk_level:"unknown",
+        operational_fit_score:score,
+        notes:notes||"Self-submitted via BMH apply form",
+      });
+      const id=phleb.id;
+      setRefId(id.slice(0,8).toUpperCase());
+
+      const cb={phlebotomist_id:id,...c};
+      ["expiration_date","cpr_bls_expiration","insurance_expiration"].forEach(k=>{if(!cb[k])delete cb[k];});
+      await post("phlebotomist_credentials",cb);
+      await post("phlebotomist_capabilities",{phlebotomist_id:id,...caps,preferred_lab_dropoff:lab||null});
+
+      const pb={phlebotomist_id:id,...pay};
+      ["per_draw_rate","hourly_rate","mileage_rate"].forEach(k=>{pb[k]=pb[k]?parseFloat(pb[k]):null;});
+      await post("phlebotomist_pay",pb);
+
+      for(const t of terrs.filter(t=>t.state.trim())) await post("phlebotomist_territories",{phlebotomist_id:id,...t});
+      for(const lane of lanes) await post("service_lanes",{phlebotomist_id:id,lane_name:lane,active:true});
+
+      setDone(true);
+    }catch(e){setError(e.message);}
+    setLoad(false);
+  };
+
+  const Sidebar=()=>(
+    <div className="side">
+      <div className="logo">
+        <div className="logo-mark">B</div>
+        <div><div className="logo-name">Beyond Mobile Health</div><div className="logo-sub">Phlebotomist Network</div></div>
+      </div>
+      {done
+        ?<><div className="side-hed">Application submitted</div><div className="side-sub">Our team will review your profile and reach out within 2–3 business days.</div></>
+        :<><div className="side-hed">Join the BMH network</div><div className="side-sub">Complete your contractor profile. Takes about 5 minutes.</div>
+          <ul className="steps">{STEPS.map(s=><li key={s.id} className={`step ${ss(s.id)}`}><div className="step-num">{ss(s.id)==="done"?"✓":s.icon}</div><span className="step-label">{s.label}</span></li>)}</ul></>
+      }
+      <div className="side-footer">HIPAA COMPLIANT · SECURE SUBMISSION<br/>© {new Date().getFullYear()} Beyond Mobile Health<br/>beyondmobilehealth.com</div>
+    </div>
+  );
+
+  if(done) return(
+    <div className="root"><Sidebar/>
+      <div className="main"><div className="success">
+        <div className="success-icon">✓</div>
+        <div className="success-title">You're in the system.</div>
+        <div className="success-msg">Thank you for applying to the BMH Phlebotomist Network. Your profile is now under review. Our team will reach out within 2–3 business days to discuss next steps.</div>
+        <div className="success-ref">REFERENCE ID · BMH-{refId}</div>
+      </div></div>
+    </div>
+  );
+
+  const activeCaps=Object.entries(caps).filter(([,v])=>v).map(([k])=>CAPS.find(c=>c.k===k)?.l||k);
+
+  return(
+    <div className="root"><Sidebar/>
+      <div className="main"><div className="shell">
+        <div className="prog"><div className="prog-fill" style={{width:`${pct}%`}}/></div>
+
+        {/* ── STEP 1 ── */}
+        {step===1&&<>
+          <div className="step-hdr"><div className="eyebrow">Step 01 of 06</div><div className="title">Personal information</div><div className="desc">Basic contact info — how BMH will reach you for assignments.</div></div>
+          <Field label="Full name" required><input type="text" value={p.full_name} onChange={e=>sP("full_name",e.target.value)} placeholder="First and last name"/></Field>
+          <div className="g2">
+            <Field label="Phone" required><input type="tel" value={p.phone} onChange={e=>sP("phone",e.target.value)} placeholder="(000) 000-0000"/></Field>
+            <Field label="Email"><input type="email" value={p.email} onChange={e=>sP("email",e.target.value)} placeholder="you@email.com"/></Field>
+          </div>
+          <div className="g3">
+            <Field label="City"><input type="text" value={p.city} onChange={e=>sP("city",e.target.value)} placeholder="City"/></Field>
+            <Field label="State"><input type="text" value={p.state} onChange={e=>sP("state",e.target.value)} placeholder="MD" maxLength={2}/></Field>
+            <Field label="ZIP"><input type="text" value={p.zip_code} onChange={e=>sP("zip_code",e.target.value)} placeholder="00000"/></Field>
+          </div>
+          <Field label="Travel radius (miles)"><input type="number" value={p.travel_radius_miles} onChange={e=>sP("travel_radius_miles",e.target.value)} placeholder="How far will you travel?"/></Field>
+        </>}
+
+        {/* ── STEP 2 ── */}
+        {step===2&&<>
+          <div className="step-hdr"><div className="eyebrow">Step 02 of 06</div><div className="title">Credentials & compliance</div><div className="desc">Your certifications and compliance docs. Verified before activation.</div></div>
+          <div className="mini-lbl">Phlebotomy certification</div>
+          <div className="g3">
+            <Field label="Cert type"><select value={c.cert_type} onChange={e=>sC("cert_type",e.target.value)}><option value="">Select</option>{["NPA","ASCP","AMT","NCCT","NCCPT","Other"].map(v=><option key={v} value={v}>{v}</option>)}</select></Field>
+            <Field label="Cert number"><input type="text" value={c.cert_number} onChange={e=>sC("cert_number",e.target.value)} placeholder="Certificate #"/></Field>
+            <Field label="Expiration"><input type="date" value={c.expiration_date} onChange={e=>sC("expiration_date",e.target.value)}/></Field>
+          </div>
+          <Field label="Issuing body"><input type="text" value={c.issuing_body} onChange={e=>sC("issuing_body",e.target.value)} placeholder="e.g. National Phlebotomy Association"/></Field>
+          <div className="hr"/><div className="mini-lbl">Additional compliance</div>
+          <div className="chip-grid" style={{gridTemplateColumns:"1fr 1fr 1fr",marginBottom:14}}>
+            <Chip checked={c.cpr_bls_current} onChange={()=>sC("cpr_bls_current",!c.cpr_bls_current)} label="CPR/BLS current"/>
+            <Chip checked={c.liability_insurance} onChange={()=>sC("liability_insurance",!c.liability_insurance)} label="Liability insurance"/>
+            <Chip checked={c.driver_license} onChange={()=>sC("driver_license",!c.driver_license)} label="Driver license"/>
+          </div>
+          <div className="g3">
+            <Field label="CPR/BLS exp."><input type="date" value={c.cpr_bls_expiration} onChange={e=>sC("cpr_bls_expiration",e.target.value)}/></Field>
+            <Field label="Insurance exp."><input type="date" value={c.insurance_expiration} onChange={e=>sC("insurance_expiration",e.target.value)}/></Field>
+            <Field label="Background check"><select value={c.background_check_status} onChange={e=>sC("background_check_status",e.target.value)}><option value="not_submitted">Not submitted</option><option value="pending">Pending</option><option value="clear">Clear</option><option value="flagged">Flagged</option></select></Field>
+          </div>
+        </>}
+
+        {/* ── STEP 3 ── */}
+        {step===3&&<>
+          <div className="step-hdr"><div className="eyebrow">Step 03 of 06</div><div className="title">Skills & availability</div><div className="desc">Select everything that applies to your current skillset.</div></div>
+          <div className="mini-lbl">Draw capabilities & availability</div>
+          <div className="chip-grid" style={{marginBottom:16}}>{CAPS.map(({k,l})=><Chip key={k} checked={caps[k]} onChange={()=>setCaps(x=>({...x,[k]:!x[k]}))} label={l}/>)}</div>
+          <Field label="Preferred lab drop-off"><input type="text" value={lab} onChange={e=>setLab(e.target.value)} placeholder="e.g. LabCorp Hagerstown, Quest Frederick..."/></Field>
+          <div className="hr"/><div className="mini-lbl">Service lanes — select all you qualify for</div>
+          <div className="chip-grid">{LANES.map(({v,l})=><Chip key={v} checked={lanes.includes(v)} onChange={()=>setLanes(x=>x.includes(v)?x.filter(i=>i!==v):[...x,v])} label={l}/>)}</div>
+        </>}
+
+        {/* ── STEP 4 ── */}
+        {step===4&&<>
+          <div className="step-hdr"><div className="eyebrow">Step 04 of 06</div><div className="title">Territory coverage</div><div className="desc">Where do you operate? Add all counties and states you cover.</div></div>
+          <div style={{marginBottom:10}}>
+            {terrs.map((t,i)=>(
+              <div key={i} className="terr-row">
+                <div>{i===0&&<label className="flabel">County</label>}<input type="text" value={t.county} onChange={e=>setTerrs(x=>x.map((r,j)=>j===i?{...r,county:e.target.value}:r))} placeholder="County name"/></div>
+                <div>{i===0&&<label className="flabel">State</label>}<input type="text" value={t.state} onChange={e=>setTerrs(x=>x.map((r,j)=>j===i?{...r,state:e.target.value.toUpperCase()}:r))} placeholder="ST" maxLength={2}/></div>
+                <div>{i===0&&<label className="flabel">Type</label>}<select value={t.territory_type} onChange={e=>setTerrs(x=>x.map((r,j)=>j===i?{...r,territory_type:e.target.value}:r))}><option value="primary">Primary</option><option value="secondary">Secondary</option><option value="occasional">Occasional</option></select></div>
+                <button className="btn-rm" style={{marginTop:i===0?20:0}} onClick={()=>setTerrs(x=>x.filter((_,j)=>j!==i))}>×</button>
+              </div>
+            ))}
+          </div>
+          <button className="btn-add-terr" onClick={()=>setTerrs(x=>[...x,{county:"",state:"",territory_type:"primary"}])}>+ Add territory</button>
+        </>}
+
+        {/* ── STEP 5 ── */}
+        {step===5&&<>
+          <div className="step-hdr"><div className="eyebrow">Step 05 of 06</div><div className="title">Compensation & final details</div><div className="desc">Pay preferences. All rates are negotiable during onboarding.</div></div>
+          <div className="g2">
+            <Field label="Pay model"><select value={pay.pay_model} onChange={e=>sPy("pay_model",e.target.value)}><option value="per_draw">Per draw</option><option value="hourly">Hourly</option><option value="hybrid">Hybrid</option></select></Field>
+            <Field label="Per-draw rate ($)"><input type="number" value={pay.per_draw_rate} onChange={e=>sPy("per_draw_rate",e.target.value)} placeholder="0.00"/></Field>
+          </div>
+          <div className="g2">
+            <Field label="Hourly rate ($)"><input type="number" value={pay.hourly_rate} onChange={e=>sPy("hourly_rate",e.target.value)} placeholder="0.00"/></Field>
+            <Field label="Mileage rate ($/mi)"><input type="number" step=".001" value={pay.mileage_rate} onChange={e=>sPy("mileage_rate",e.target.value)} placeholder="0.670"/></Field>
+          </div>
+          <div className="chip-grid" style={{gridTemplateColumns:"1fr",marginBottom:18}}><Chip checked={pay.travel_reimbursement} onChange={()=>sPy("travel_reimbursement",!pay.travel_reimbursement)} label="I require travel reimbursement"/></div>
+          <div className="hr"/><div className="mini-lbl">Self-assessment score (1–10)</div>
+          <div className="score-row">{[1,2,3,4,5,6,7,8,9,10].map(n=><button key={n} className={`score-btn${score===n?" sel":""}`} onClick={()=>setScore(n)}>{n}</button>)}</div>
+          <Field label="Additional notes"><textarea value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Specialties, preferred hours, anything else..."/></Field>
+        </>}
+
+        {/* ── STEP 6 — REVIEW ── */}
+        {step===6&&<>
+          <div className="step-hdr"><div className="eyebrow">Step 06 of 06 · Final Review</div><div className="title">Review your application</div><div className="desc">Verify your details before submitting to Beyond Mobile Health.</div></div>
+
+          <SummaryBlock title="Contact information">
+            <div className="review-grid">
+              <div className="review-item"><b>Full name</b>{p.full_name||"—"}</div>
+              <div className="review-item"><b>Phone</b>{p.phone||"—"}</div>
+              <div className="review-item"><b>Email</b>{p.email||"—"}</div>
+              <div className="review-item"><b>Location</b>{[p.city,p.state,p.zip_code].filter(Boolean).join(", ")||"—"}</div>
+              <div className="review-item"><b>Travel radius</b>{p.travel_radius_miles?`${p.travel_radius_miles} miles`:"—"}</div>
+            </div>
+          </SummaryBlock>
+
+          <SummaryBlock title="Credentials">
+            <div className="review-grid">
+              <div className="review-item"><b>Cert type</b>{c.cert_type||"—"}</div>
+              <div className="review-item"><b>Cert number</b>{c.cert_number||"—"}</div>
+              <div className="review-item"><b>Expiration</b>{c.expiration_date||"—"}</div>
+              <div className="review-item"><b>Issuing body</b>{c.issuing_body||"—"}</div>
+              <div className="review-item"><b>CPR/BLS</b>{c.cpr_bls_current?"✓ Current":"Not current"}</div>
+              <div className="review-item"><b>Insurance</b>{c.liability_insurance?"✓ On file":"Not on file"}</div>
+              <div className="review-item"><b>Background check</b>{c.background_check_status?.replace(/_/g," ")||"—"}</div>
+              <div className="review-item"><b>Driver license</b>{c.driver_license?"✓ Yes":"No"}</div>
+            </div>
+          </SummaryBlock>
+
+          <SummaryBlock title="Capabilities & service lanes">
+            {activeCaps.length>0
+              ?<div className="review-caps">{activeCaps.map(l=><span key={l} className="cap-pill">{l}</span>)}</div>
+              :<div style={{fontSize:12,color:"#94a3b8",marginTop:8}}>None selected</div>}
+            {lanes.length>0&&<div style={{marginTop:10,fontSize:12,color:"#475569"}}><b style={{fontSize:10,fontWeight:600,letterSpacing:".08em",textTransform:"uppercase",color:"#94a3b8",display:"block",marginBottom:6}}>Service lanes</b><div className="review-caps">{lanes.map(v=><span key={v} className="cap-pill" style={{background:"#eff6ff",color:"#1d4ed8"}}>{LANES.find(l=>l.v===v)?.l||v}</span>)}</div></div>}
+          </SummaryBlock>
+
+          <SummaryBlock title="Compensation">
+            <div className="review-grid">
+              <div className="review-item"><b>Pay model</b>{pay.pay_model?.replace(/_/g," ")||"—"}</div>
+              <div className="review-item"><b>Per-draw rate</b>{pay.per_draw_rate?`$${pay.per_draw_rate}/draw`:"—"}</div>
+              <div className="review-item"><b>Hourly rate</b>{pay.hourly_rate?`$${pay.hourly_rate}/hr`:"—"}</div>
+              <div className="review-item"><b>Mileage</b>{pay.mileage_rate?`$${pay.mileage_rate}/mi`:"—"}</div>
+              <div className="review-item"><b>Travel reimb.</b>{pay.travel_reimbursement?"Required":"Not required"}</div>
+              <div className="review-item"><b>Self-score</b>{score?`${score}/10`:"—"}</div>
+            </div>
+            {notes&&<div style={{marginTop:12,fontSize:12,color:"#475569",background:"#f8fafc",borderRadius:8,padding:"10px 12px",lineHeight:1.6}}><b style={{fontSize:10,fontWeight:600,letterSpacing:".08em",textTransform:"uppercase",color:"#94a3b8",display:"block",marginBottom:4}}>Notes</b>{notes}</div>}
+          </SummaryBlock>
+
+          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"12px 14px",fontSize:12,color:"#92400e",fontFamily:"'JetBrains Mono',monospace"}}>
+            By submitting you confirm this information is accurate. BMH will contact you to complete onboarding.
+          </div>
+        </>}
+
+        {error&&<div className="alert">{error}</div>}
+
+        <div className="nav">
+          {step>1?<button className="btn-back" onClick={()=>{setError("");setStep(s=>s-1);}}>← Back</button>:<div/>}
+          {step<6
+            ?<button className="btn-next" onClick={next}>Continue →</button>
+            :<button className="btn-submit" onClick={next} disabled={loading}>{loading?"Submitting…":"Confirm & Submit ✓"}</button>}
+        </div>
+      </div></div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
