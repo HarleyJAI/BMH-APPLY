@@ -266,15 +266,23 @@ function DetailPanel({ p, onClose, onRefresh }) {
     setDnuLoad(true); setDnuError("");
     try {
       await sbPatch("phlebotomists", p.id, { do_not_use: true, do_not_use_reason: dnuReason.trim(), do_not_use_at: new Date().toISOString(), do_not_use_by: "Admin" });
-      setDnuModal(false); onRefresh();
+      // Close modal and reset first, THEN refresh — prevents overlay freeze on unmount
+      setDnuModal(false);
+      setDnuReason("");
+      setDnuError("");
+      setDnuLoad(false);
+      setTimeout(() => onRefresh(), 50);
+      return;
     } catch(e) { setDnuError(e.message); }
     setDnuLoad(false);
   };
 
   const handleClearDNU = async () => {
     if (!confirm("Remove Do Not Use flag for " + p.full_name + "?")) return;
-    try { await sbPatch("phlebotomists", p.id, { do_not_use: false, do_not_use_reason: null, do_not_use_at: null, do_not_use_by: null }); onRefresh(); }
-    catch(e) { alert(e.message); }
+    try {
+      await sbPatch("phlebotomists", p.id, { do_not_use: false, do_not_use_reason: null, do_not_use_at: null, do_not_use_by: null });
+      setTimeout(() => onRefresh(), 50);
+    } catch(e) { alert(e.message); }
   };
 
   const EInput = ({ k, placeholder, type="text", style={} }) => (
@@ -301,9 +309,10 @@ function DetailPanel({ p, onClose, onRefresh }) {
   );
 
   return (
-    <div style={{ width: 360, background: isDNU ? "#fff5f5" : "#fff", borderLeft: `1.5px solid ${isDNU ? "#fecaca" : "#e2e8f0"}`, overflowY: "auto", flexShrink: 0, height: "100vh", position: "sticky", top: 0, padding: "24px 22px" }}>
+    <div style={{ width: 360, background: isDNU ? "#fff5f5" : "#fff", borderLeft: `1.5px solid ${isDNU ? "#fecaca" : "#e2e8f0"}`, overflowY: "auto", flexShrink: 0, height: "100vh", position: "sticky", top: 0, padding: "24px 22px", isolation: "isolate" }}>
       {dnuModal && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.5)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center" }}
+          onClick={e => { if(e.target === e.currentTarget){ setDnuModal(false); setDnuReason(""); setDnuError(""); } }}>
           <div style={{ background: "#fff", borderRadius: 14, padding: "28px 28px 24px", width: 420, boxShadow: "0 20px 60px #00000030" }}>
             <div style={{ fontSize: 16, fontWeight: 800, color: "#0f172a", marginBottom: 6 }}>Flag as Do Not Use</div>
             <div style={{ fontSize: 13, color: "#64748b", marginBottom: 18, lineHeight: 1.6 }}>This will mark <strong>{p.full_name}</strong> with a red flag. They remain in the registry for audit purposes.</div>
